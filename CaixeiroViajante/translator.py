@@ -28,6 +28,7 @@ def read(fileName):
     
     # If not, reads every line and makes the distances one by one
     if(answer == 'n'):
+        print("\nFormulando matriz...")
         # Gets all the cities
         for line in lines:
             infos = line.split()
@@ -44,6 +45,7 @@ def read(fileName):
                 distances.append(distance)
 
             cities.append(City(localization.id, distances))
+        print("Matriz formulada!\n")
     # If yes, reads every line and just make the cities
     else:
         counter = 0
