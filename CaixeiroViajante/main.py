@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def calculate(cities):
     past_cities = []
     past_distances = []
@@ -61,14 +60,14 @@ def calculate(cities):
     
     distances_text = "0 -> "
     counter = 0
-    distancia_total = 0
+    total_distance = 0
     print("Distância total:")
-    for distancia_percorrida in past_distances:
+    for past_distance in past_distances:
         if counter == len(past_distances) - 1:
-            distances_text = distances_text + '{}'.format(distancia_total + distancia_percorrida)    
+            distances_text = distances_text + '{}'.format(total_distance + past_distance)    
         else:
-            distances_text = distances_text + '{} -> '.format(distancia_total + distancia_percorrida)
+            distances_text = distances_text + '{} -> '.format(total_distance + past_distance)
             counter = counter + 1
-            distancia_total = distancia_total + distancia_percorrida
+            total_distance = total_distance + past_distance
 
     print(distances_text)
