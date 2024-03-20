@@ -1,34 +1,57 @@
 from math import sqrt
+from main import calculate
 
-
-class Localizacao:
+# 
+class Localization:
     def __init__(self, id, x, y):
         self.id = id
         self.x = x
         self.y = y
 
-class Cidade:
-    def __init__(self, id, distancias):
+class City:
+    def __init__(self, id, distances):
         self.id = id
-        self.distancias = distancias
+        self.distancias = distances
 
-with open('1002_cidade.txt', 'r') as file:
-    linhas = file.readlines()
+def read(fileName):
+    with open(fileName, 'r') as file:
+        lines = file.readlines()
 
-localizacoes = []
-cidades = []
+    localizations = []
+    cities = []
 
-for linha in linhas:
-    infos = linha.split()
-    localizacao = Localizacao(int(infos[0])-1, int(infos[1]), int(infos[2]))
-    localizacoes.append(localizacao)
-
-for localizacao in localizacoes:
-    distancias = []
-    for localizacao_cidade_vizinha in localizacoes:
-        x_diff = abs(localizacao.x - localizacao_cidade_vizinha.x)
-        y_diff = abs(localizacao.y - localizacao_cidade_vizinha.y)
-        distance = int(abs(round(sqrt(pow(x_diff, 2) + pow(y_diff, 2)), 0)))
-        distancias.append(distance)
+    print("O arquivo ja vem formatado como matriz? (s/n)")
+    answer = input().lower()
     
-    cidades.append(Cidade(localizacao.id, distancias))
+    if(answer == 'n'):
+        for line in lines:
+            infos = line.split()
+            localization = Localization(int(infos[0])-1, int(infos[1]), int(infos[2]))
+            localizations.append(localization)
+
+        for localization in localizations:
+            distances = []
+            for near_city_localization in localizations:
+                x_diff = abs(localization.x - near_city_localization.x)
+                y_diff = abs(localization.y - near_city_localization.y)
+                distance = int(abs(round(sqrt(pow(x_diff, 2) + pow(y_diff, 2)), 0)))
+                distances.append(distance)
+
+            cities.append(City(localization.id, distances))
+    else:
+        counter = 0
+        for line in lines:
+            distances = line.split()
+            formatted_distances = []
+            for distance in distances:
+                formatted_distances.append(int(distance))
+
+            cities.append(City(counter, formatted_distances))
+            counter = counter + 1       
+         
+    return cities
+    
+print("Selecione o arquivo a ser lido:")
+
+cities = read(input())
+calculate(cities)
