@@ -1,5 +1,5 @@
 from math import sqrt
-from main import calculate
+from main import mochileiro
 
 # Classes Localization and City to organize 
 class Localization:
@@ -65,5 +65,5 @@ print("Selecione o arquivo a ser lido:")
 
 # Call to function read
 cities = read(input())
-# Call to function calculate (main.py)
-calculate(cities)
+# Call to function mochileiro (main.py)
+mochileiro(cities)

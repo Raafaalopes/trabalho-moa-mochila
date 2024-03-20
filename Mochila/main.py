@@ -1,4 +1,4 @@
-def mochila(nome_do_arquivo):
+def borsa(nome_do_arquivo, peso_maximo):
     # Abrir o arquivo
     with open(nome_do_arquivo, 'r') as file:
         linhas = file.readlines()
@@ -6,7 +6,6 @@ def mochila(nome_do_arquivo):
     # Processar cada linha
     pesos = []
     utilidades = []
-    n = None
 
     # Separando em listas cada parte do arquivo texto
     # n é apenas um inteiro entao nao precisa de lista
@@ -15,9 +14,6 @@ def mochila(nome_do_arquivo):
             pesos = list(map(int, linha.split()[1:]))
         elif linha.startswith('utilidade:'):
             utilidades = list(map(int, linha.split()[1:]))
-        elif linha.startswith('n ='):
-            n = int(linha.split('=')[1])
-
 
     # Lista para armazenar as divisões
     medias = [peso / utilidade for peso, utilidade in zip(pesos, utilidades)]
@@ -38,16 +34,16 @@ def mochila(nome_do_arquivo):
     # Quando chegar a ser maior para de colocar na lista
     soma_pesos = 0
     for peso, utilidade, media in elementos_ordenados:
-        if soma_pesos + peso <= n:
+        if soma_pesos + peso <= peso_maximo:
             mochila.append((peso, utilidade, media))
             soma_pesos += peso
 
 
     # Verificar se todas as informações foram lidas corretamente
-    if pesos and utilidades and n is not None:
+    if pesos and utilidades:
         print("\nPesos:", pesos)
         print("\nUtilidades:", utilidades)
-        print("\nn:", n)
+        print("\nPeso máximo:", peso_maximo)
     else:
         print("Erro: Alguma informação está faltando no arquivo.")
 
@@ -55,4 +51,8 @@ def mochila(nome_do_arquivo):
     print("\nElementos na mochila (peso, utilidade, média):", mochila)
     
 print("Selecione o arquivo a ser lido:")
-mochila(input())
+nome_do_arquivo = input()
+print("Qual o peso máximo da mochila?")
+peso_maximo = int(input()) 
+
+borsa(nome_do_arquivo, peso_maximo)

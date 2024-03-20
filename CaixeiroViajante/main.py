@@ -1,7 +1,7 @@
 import numpy as np
 
 # Function that does all the calculation
-def calculate(cities):    
+def mochileiro(cities):    
     past_cities = []
     past_distances = []
     number_of_cities = len(cities)
