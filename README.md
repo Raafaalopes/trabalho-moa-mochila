@@ -1,5 +1,7 @@
 # Modelagem e otimização algorítmica
 
+## Feito pelos acadêmicos Matheus Hamada (ra124101@uem.br) & Rafael Alexander Lopes (ra127522@uem.br)
+
 ### Códigos de heurística para os problemas conhecidos, o problema da mochila e o problema do caixeiro viajante
 
 ### Heurística do problema da mochila:
