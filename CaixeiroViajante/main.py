@@ -1,7 +1,10 @@
-def calculate(cidades):
+import numpy as np
+
+
+def calculate(cities):
     cidades_percorridas = []
     distancias_percorridas = []
-    quantidade_de_cidades = len(cidades)
+    quantidade_de_cidades = len(cities)
     
     print("Escolha a cidade inicial (de 1 até {maximo})".format(maximo = quantidade_de_cidades))
     cidade_inicial = int(input()) - 1
@@ -9,7 +12,7 @@ def calculate(cidades):
 
     quantidade_de_cidades_percorridas = 1
     while quantidade_de_cidades_percorridas < quantidade_de_cidades + 1:
-        cidade = cidades[cidade_escolhida]     
+        cidade = cities[cidade_escolhida]     
         cidades_percorridas.append(cidade.id)
 
         indices_excluidos = []
@@ -24,13 +27,23 @@ def calculate(cidades):
         
         distancia_da_cidade = min(resultado)
         distancias_percorridas.append(distancia_da_cidade)
-        proxima_cidade = cidade.distancias.index(distancia_da_cidade)
+        
+        distancias = np.array(cidade.distancias)
+        ocorrencias = np.where(distancias == distancia_da_cidade)[0]
+        
+        ids_nao_usados = np.setdiff1d(ocorrencias, np.array(indices_excluidos))
+
+        formatado = []
+        for id in ids_nao_usados:
+            formatado.append(id)
+                    
+        proxima_cidade = formatado[0]
         cidade_escolhida = proxima_cidade
 
         quantidade_de_cidades_percorridas = quantidade_de_cidades_percorridas + 1
 
-    cidades_percorridas.append(0)
-    cidade = cidades[cidade_escolhida]
+    cidades_percorridas.append(cidade_inicial)
+    cidade = cities[cidade_escolhida]
     distancia = cidade.distancias[cidade_inicial]
     distancias_percorridas.append(distancia)
 
@@ -44,6 +57,8 @@ def calculate(cidades):
             texto_cidades = texto_cidades + '{} -> '.format(cidade_percorrida + 1)
             contador = contador + 1
 
+    print(texto_cidades)
+    
     texto_distancias = "0 -> "
     contador = 0
     distancia_total = 0
@@ -56,5 +71,4 @@ def calculate(cidades):
             contador = contador + 1
             distancia_total = distancia_total + distancia_percorrida
 
-    print(texto_cidades)
     print(texto_distancias)
