@@ -11,7 +11,7 @@ class Localization:
 class City:
     def __init__(self, id, distances):
         self.id = id
-        self.distancias = distances
+        self.distances = distances
 
 def read(fileName):
     with open(fileName, 'r') as file:

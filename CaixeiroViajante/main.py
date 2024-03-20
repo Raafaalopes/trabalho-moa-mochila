@@ -2,73 +2,73 @@ import numpy as np
 
 
 def calculate(cities):
-    cidades_percorridas = []
-    distancias_percorridas = []
-    quantidade_de_cidades = len(cities)
+    past_cities = []
+    past_distances = []
+    number_of_cities = len(cities)
     
-    print("Escolha a cidade inicial (de 1 até {maximo})".format(maximo = quantidade_de_cidades))
-    cidade_inicial = int(input()) - 1
-    cidade_escolhida = cidade_inicial
+    print("Escolha a cidade inicial (de 1 até {})".format(number_of_cities))
+    initial_city = int(input()) - 1
+    chosen_city = initial_city
 
-    quantidade_de_cidades_percorridas = 1
-    while quantidade_de_cidades_percorridas < quantidade_de_cidades + 1:
-        cidade = cities[cidade_escolhida]     
-        cidades_percorridas.append(cidade.id)
+    amount_past_cities = 1
+    while amount_past_cities < number_of_cities + 1:
+        city = cities[chosen_city]     
+        past_cities.append(city.id)
 
-        indices_excluidos = []
-        indices_excluidos.append(cidade.id)
-        for cidade_percorrida in cidades_percorridas:
-            indices_excluidos.append(cidade_percorrida)
+        excluded_indexes = []
+        excluded_indexes.append(city.id)
+        for past_city in past_cities:
+            excluded_indexes.append(past_city)
 
-        resultado = [item for i, item in enumerate(cidade.distancias) if i not in indices_excluidos]
+        result = [item for i, item in enumerate(city.distances) if i not in excluded_indexes]
 
-        if len(resultado) == 0:
+        if len(result) == 0:
             break
         
-        distancia_da_cidade = min(resultado)
-        distancias_percorridas.append(distancia_da_cidade)
+        city_distance = min(result)
+        past_distances.append(city_distance)
         
-        distancias = np.array(cidade.distancias)
-        ocorrencias = np.where(distancias == distancia_da_cidade)[0]
+        distances = np.array(city.distances)
+        occurrences = np.where(distances == city_distance)[0]
         
-        ids_nao_usados = np.setdiff1d(ocorrencias, np.array(indices_excluidos))
+        unused_ids = np.setdiff1d(occurrences, np.array(excluded_indexes))
 
-        formatado = []
-        for id in ids_nao_usados:
-            formatado.append(id)
+        formatted = []
+        for unused_id in unused_ids:
+            formatted.append(unused_id)
                     
-        proxima_cidade = formatado[0]
-        cidade_escolhida = proxima_cidade
+        next_city = formatted[0]
+        chosen_city = next_city
 
-        quantidade_de_cidades_percorridas = quantidade_de_cidades_percorridas + 1
+        amount_past_cities = amount_past_cities + 1
 
-    cidades_percorridas.append(cidade_inicial)
-    cidade = cities[cidade_escolhida]
-    distancia = cidade.distancias[cidade_inicial]
-    distancias_percorridas.append(distancia)
+    past_cities.append(initial_city)
+    city = cities[chosen_city]
+    distancia = city.distances[initial_city]
+    past_distances.append(distancia)
 
-    texto_cidades = ''          
-    contador = 0
+    city_text = ''          
+    counter = 0
     print("Caminho perocrrido:")
-    for cidade_percorrida in cidades_percorridas:
-        if contador == quantidade_de_cidades:
-            texto_cidades = texto_cidades + '{}'.format(cidade_percorrida + 1)    
+    for past_city in past_cities:
+        if counter == number_of_cities:
+            city_text = city_text + '{}'.format(past_city + 1)    
         else:
-            texto_cidades = texto_cidades + '{} -> '.format(cidade_percorrida + 1)
-            contador = contador + 1
+            city_text = city_text + '{} -> '.format(past_city + 1)
+            counter = counter + 1
 
-    print(texto_cidades)
+    print(city_text)
     
-    texto_distancias = "0 -> "
-    contador = 0
+    distances_text = "0 -> "
+    counter = 0
     distancia_total = 0
     print("Distância total:")
-    for distancia_percorrida in distancias_percorridas:
-        if contador == len(distancias_percorridas) - 1:
-            texto_distancias = texto_distancias + '{}'.format(distancia_total + distancia_percorrida)    
+    for distancia_percorrida in past_distances:
+        if counter == len(past_distances) - 1:
+            distances_text = distances_text + '{}'.format(distancia_total + distancia_percorrida)    
         else:
-            texto_distancias = texto_distancias + '{} -> '.format(distancia_total + distancia_percorrida)
-            contador = contador + 1
+            distances_text = distances_text + '{} -> '.format(distancia_total + distancia_percorrida)
+            counter = counter + 1
             distancia_total = distancia_total + distancia_percorrida
 
-    print(texto_distancias)
+    print(distances_text)
